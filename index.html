@@ -3,9 +3,70 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>filemanager</title>
+    <title>Web File Manager</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        #fileList {
+            list-style: none;
+            padding: 0;
+        }
+        #fileList li {
+            margin-bottom: 10px;
+        }
+    </style>
 </head>
 <body>
-<h1>this is a file manager</h1>    
+    <h2>Web File Manager</h2>
+    <ul id="fileList"></ul>
+    <input type="file" id="fileInput" multiple>
+    <button onclick="uploadFiles()">Upload Files</button>
+    <button onclick="refreshFileList()">Refresh File List</button>
+
+    <script>
+        const fileInput = document.getElementById('fileInput');
+        const fileList = document.getElementById('fileList');
+
+        // Function to upload files
+        function uploadFiles() {
+            const files = fileInput.files;
+
+            if (files.length > 0) {
+                const formData = new FormData();
+
+                for (let i = 0; i < files.length; i++) {
+                    formData.append('files', files[i]);
+                }
+
+                // You can use a server-side script to handle file uploads.
+                // For simplicity, this example doesn't include the server-side handling.
+                console.log('Files uploaded:', files);
+                refreshFileList(); // Refresh the file list after uploading
+            } else {
+                alert('Please select files to upload.');
+            }
+        }
+
+        // Function to refresh the file list
+        function refreshFileList() {
+            // You can replace this with a server-side script to fetch the file list dynamically.
+            const files = ['file1.txt', 'file2.jpg', 'file3.pdf'];
+
+            // Clear the current file list
+            fileList.innerHTML = '';
+
+            // Display the updated file list
+            files.forEach(file => {
+                const listItem = document.createElement('li');
+                listItem.textContent = file;
+                fileList.appendChild(listItem);
+            });
+        }
+
+        // Initial file list display
+        refreshFileList();
+    </script>
 </body>
 </html>
